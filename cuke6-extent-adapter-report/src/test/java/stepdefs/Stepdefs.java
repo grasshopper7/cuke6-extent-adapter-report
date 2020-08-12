@@ -1,6 +1,7 @@
 package stepdefs;
 
-import static org.testng.Assert.assertEquals;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import java.util.Random;
@@ -10,26 +11,42 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-//import io.cucumber.core.api.Scenario;
-import io.cucumber.java.*;
-import io.cucumber.java.en.*;
+import io.cucumber.java.After;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeStep;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+/*import cucumber.api.*;
+import cucumber.api.java.*;
+import cucumber.api.java.en.*;*/
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Stepdefs {
-	
-	private Scenario scenario;
-	
-	/*
-	 * @BeforeStep public void beforeStep() throws InterruptedException {
-	 * Thread.sleep(250); }
-	 */
 
+	private Scenario scenario;
+
+	@Before
+	public void before() {
+		
+	}
+	
+	@After
+	public void after() {
+		
+	}
+	
 	@Given("Write a {string} step with precondition in {string}")
 	@When("Complete action in {string} step in {string}")
 	@Then("Validate the outcome in {string} step in {string}")
-	public void step(String step, String scenario) {
+	public void step(String step, String scenario) throws InterruptedException {
 		System.out.format("%s step from %s.\n", step.toUpperCase(), scenario.toUpperCase());
+		Thread.sleep(500);
 	}
 
 	@Then("Raise exception")
@@ -37,10 +54,9 @@ public class Stepdefs {
 
 		Random r = new Random();
 		boolean flag = r.nextBoolean();
-		System.out.println(flag);
 		assertEquals(flag, true);
 	}
-	
+
 	@Then("Do not raise exception")
 	public void doNotRaiseExcep() {
 		assertEquals(true, true);
@@ -55,49 +71,22 @@ public class Stepdefs {
 	public void docStr(String docStr) {
 		System.out.println(docStr);
 	}
-	
-	@Before(value = "@website")
-	public void before(Scenario scenario) {
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			
-		}
-		this.scenario = scenario;
-	}
-	
-	@After(value = "@website")
-	public void after() {
-		try {
-			Thread.sleep(250);
-		} catch (InterruptedException e) {
-			
-		}
-	}
 
 	private WebDriver driver;
 	private String site;
 
 	@And("Go to {word}")
 	public void visitweb(String site) throws Exception {
-		System.out.println(site);
 		driver.get(site);
 		this.site = site;
-		scenario.log("scenario write");
-		Thread.sleep(5000);
+		//scenario.write("scenario write");
+		scenario.log("scenario website name - " + site);
+		Thread.sleep(3000);
 	}
 
-	/*
-	 * @Before("not @foo") public void before(Scenario scenario) {
-	 * scenario.write("Runs BEFORE scenarios *not* tagged with @foo"); }
-	 * 
-	 * @After("not @foo") public void after(Scenario scenario) {
-	 * scenario.write("Runs AFTER scenarios *not* tagged with @foo"); }
-	 */
-
 	@BeforeStep(value = "@website")
-	public void beforeSite() {
-		System.out.println("BEFORE SITE");
+	public void beforeSite(Scenario scenario) {
+		this.scenario = scenario;
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
@@ -105,11 +94,10 @@ public class Stepdefs {
 
 	@AfterStep(value = "@website")
 	public void afterSite() {
-		System.out.println("AFTER SITE");
-
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		byte[] screenshot = ts.getScreenshotAs(OutputType.BYTES);
-		scenario.log("this is my failure message……….");
+		//scenario.embed(screenshot, "image/png", this.site);
+		// scenario.embed(screenshot, "image/png");
 		scenario.attach(screenshot, "image/png", this.site);
 		driver.quit();
 	}

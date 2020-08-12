@@ -1,5 +1,5 @@
-@Norm @Excep
-Feature: Scenarios Exception
+@exception
+Feature: Exception
 
   Scenario: Exception
     Given Raise exception

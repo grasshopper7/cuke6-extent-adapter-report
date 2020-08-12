@@ -1,5 +1,5 @@
-@tab
-Feature: Scenario DataTable
+@tabledoc
+Feature: DataTable And DocString
 	
 	
   Scenario: DataTable Scenario

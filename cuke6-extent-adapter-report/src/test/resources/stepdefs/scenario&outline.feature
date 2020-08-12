@@ -1,8 +1,7 @@
-@Norm @Both
-Feature: Both feature file
+@both
+Feature: Scenario And Scenario Outline
 
   Scenario Outline: Scenario Outline Row <row_num>
-  #Scenario Outline: Scenario Outline Row
     Given Write a 'given' step with precondition in '<scenario_num><row_num>'
     When Complete action in 'when' step in '<scenario_num><row_num>'
     Then Validate the outcome in 'then' step in '<scenario_num><row_num>'
