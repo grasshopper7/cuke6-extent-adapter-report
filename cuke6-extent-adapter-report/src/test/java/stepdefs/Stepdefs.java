@@ -41,6 +41,11 @@ public class Stepdefs {
 		
 	}
 	
+	@Given("{string} background")
+	public void background(String type) {
+		System.out.format("%s type background. \n", type);
+	}
+	
 	@Given("Write a {string} step with precondition in {string}")
 	@When("Complete action in {string} step in {string}")
 	@Then("Validate the outcome in {string} step in {string}")
