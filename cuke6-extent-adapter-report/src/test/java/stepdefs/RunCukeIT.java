@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = { "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-		"summary" } )
+		"summary" } /* , tags = "not @website" */ )
 public class RunCukeIT {
 
 }

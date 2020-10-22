@@ -11,7 +11,7 @@ Feature: Exception
     Given Raise exception
     Given Raise exception
 
-  Scenario Outline: Check exception <row_num>
+  Scenario Outline: Check exception
     Given Raise exception
 
     Examples: 

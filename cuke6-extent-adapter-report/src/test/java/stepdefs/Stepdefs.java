@@ -3,6 +3,8 @@ package stepdefs;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Random;
 
@@ -31,14 +33,56 @@ public class Stepdefs {
 
 	private Scenario scenario;
 
-	@Before
-	public void before() {
+	@Before (value = "not @failure")
+	public void before(Scenario scenario) {
+		this.scenario = scenario;
+		scenario.log("BEFORE HI");
+		scenario.log("BEFORE HELLO");
+	}
+	
+	@After (value = "not @failure")
+	public void after(Scenario scenario) {
 		
 	}
 	
-	@After
-	public void after() {
-		
+	@Before (value = "@failure")
+	public void beforeFailure(Scenario scenario) {
+		//System.out.println("Before failure");
+		this.scenario = scenario;
+		scenario.log("FAILURE HI");
+		scenario.log("FAILURE HELLO");
+		throw new RuntimeException();
+	}
+	
+	@After (value = "@failure")
+	public void afterFailure() {
+		//System.out.println("After failure");
+		scenario.log("FAILURE HI");
+		scenario.log("FAILURE HELLO");
+		throw new RuntimeException();
+	}
+	
+	@BeforeStep (value = "@failure")
+	public void beforeStepFailure() {
+		//System.out.println("Before Step failure");
+	}
+	
+	@AfterStep (value = "@failure")
+	public void afterStepFailure() {
+		//System.out.println("After Step failure");
+	}
+	
+	@Given("Hook failure step")
+	public void hook_failure_step() throws InterruptedException {
+		//System.out.println("Failure step");
+		scenario.log("FAILURE STEP HI");
+		scenario.log("FAILURE STEP HELLO");
+	    Thread.sleep(500);
+	}
+	
+	@Given("Skip hook failure step")
+	public void skip_hook_failure_step() throws InterruptedException {
+	    Thread.sleep(250);
 	}
 	
 	@Given("{string} background")
@@ -51,7 +95,7 @@ public class Stepdefs {
 	@Then("Validate the outcome in {string} step in {string}")
 	public void step(String step, String scenario) throws InterruptedException {
 		System.out.format("%s step from %s.\n", step.toUpperCase(), scenario.toUpperCase());
-		Thread.sleep(500);
+		Thread.sleep(400);
 	}
 
 	@Then("Raise exception")
@@ -87,6 +131,8 @@ public class Stepdefs {
 		//scenario.write("scenario write");
 		scenario.log("scenario website name - " + site);
 		Thread.sleep(3000);
+		byte[] screenshot = Files.readAllBytes(new File("src/test/resources/logo.png").toPath());
+		scenario.attach(screenshot, "image/png", this.site);
 	}
 
 	@BeforeStep(value = "@website")
@@ -95,15 +141,17 @@ public class Stepdefs {
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
+		scenario.log("HELLO THERE!!!");
 	}
 
 	@AfterStep(value = "@website")
-	public void afterSite() {
+	public void afterSite(Scenario scenario) {
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		byte[] screenshot = ts.getScreenshotAs(OutputType.BYTES);
 		//scenario.embed(screenshot, "image/png", this.site);
 		// scenario.embed(screenshot, "image/png");
 		scenario.attach(screenshot, "image/png", this.site);
+		//scenario.log("HELLO THERE!!!");
 		driver.quit();
 	}
 }
