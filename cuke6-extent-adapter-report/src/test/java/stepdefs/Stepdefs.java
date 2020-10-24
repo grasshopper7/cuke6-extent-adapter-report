@@ -1,10 +1,7 @@
 package stepdefs;
 
-
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Random;
 
@@ -33,69 +30,74 @@ public class Stepdefs {
 
 	private Scenario scenario;
 
-	@Before (value = "not @failure")
+	@Before(value = "not @failure")
 	public void before(Scenario scenario) {
 		this.scenario = scenario;
 		scenario.log("BEFORE HI");
 		scenario.log("BEFORE HELLO");
 	}
-	
-	@After (value = "not @failure")
+
+	@After(value = "not @failure")
 	public void after(Scenario scenario) {
-		
+		this.scenario = scenario;
+		scenario.log("AFTER HI");
+		scenario.log("AFTER HELLO");
 	}
-	
-	@Before (value = "@failure")
-	public void beforeFailure(Scenario scenario) {
-		//System.out.println("Before failure");
+
+	@Before(value = "@failure")
+	public void beforeFailure(Scenario scenario) { //
+		System.out.println("Before failure");
 		this.scenario = scenario;
 		scenario.log("FAILURE HI");
 		scenario.log("FAILURE HELLO");
 		throw new RuntimeException();
 	}
-	
-	@After (value = "@failure")
-	public void afterFailure() {
-		//System.out.println("After failure");
+
+	@After(value = "@failure")
+	public void afterFailure() { //
+		System.out.println("After failure");
 		scenario.log("FAILURE HI");
 		scenario.log("FAILURE HELLO");
 		throw new RuntimeException();
 	}
-	
-	@BeforeStep (value = "@failure")
-	public void beforeStepFailure() {
-		//System.out.println("Before Step failure");
+
+	@BeforeStep(value = "@failure")
+	public void beforeStepFailure() { //
+		System.out.println("Before Step failure");
 	}
-	
-	@AfterStep (value = "@failure")
-	public void afterStepFailure() {
-		//System.out.println("After Step failure");
+
+	@AfterStep(value = "@failure")
+	public void afterStepFailure() { //
+		System.out.println("After Step failure");
 	}
-	
+
 	@Given("Hook failure step")
 	public void hook_failure_step() throws InterruptedException {
-		//System.out.println("Failure step");
+		// System.out.println("Failure step");
+		Thread.sleep(500);
 		scenario.log("FAILURE STEP HI");
 		scenario.log("FAILURE STEP HELLO");
-	    Thread.sleep(500);
 	}
-	
+
 	@Given("Skip hook failure step")
 	public void skip_hook_failure_step() throws InterruptedException {
-	    Thread.sleep(250);
+		Thread.sleep(250);
 	}
-	
+
 	@Given("{string} background")
-	public void background(String type) {
+	public void background(String type) throws InterruptedException {
 		System.out.format("%s type background. \n", type);
+		this.scenario.log("background");
+		Thread.sleep(250);
 	}
-	
+
 	@Given("Write a {string} step with precondition in {string}")
 	@When("Complete action in {string} step in {string}")
 	@Then("Validate the outcome in {string} step in {string}")
 	public void step(String step, String scenario) throws InterruptedException {
 		System.out.format("%s step from %s.\n", step.toUpperCase(), scenario.toUpperCase());
-		Thread.sleep(400);
+		this.scenario.log("log HATE THIS");
+		Thread.sleep(1000);
 	}
 
 	@Then("Raise exception")
@@ -112,12 +114,14 @@ public class Stepdefs {
 	}
 
 	@Given("Customer orders the dishes")
-	public void dataTable(List<List<String>> table) {
+	public void dataTable(List<List<String>> table) throws InterruptedException {
+		Thread.sleep(4000);
 		System.out.println(table);
 	}
 
 	@Given("the doc string is")
-	public void docStr(String docStr) {
+	public void docStr(String docStr) throws InterruptedException {
+		Thread.sleep(4000);
 		System.out.println(docStr);
 	}
 
@@ -128,30 +132,41 @@ public class Stepdefs {
 	public void visitweb(String site) throws Exception {
 		driver.get(site);
 		this.site = site;
-		//scenario.write("scenario write");
 		scenario.log("scenario website name - " + site);
-		Thread.sleep(3000);
-		byte[] screenshot = Files.readAllBytes(new File("src/test/resources/logo.png").toPath());
-		scenario.attach(screenshot, "image/png", this.site);
+		Thread.sleep(500);
 	}
 
-	@BeforeStep(value = "@website")
+	@BeforeStep(value = "@website", order = 1)
 	public void beforeSite(Scenario scenario) {
 		this.scenario = scenario;
+
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		scenario.log("HELLO THERE!!!");
+
+		scenario.log("HELLO THERE!!! ");
 	}
 
-	@AfterStep(value = "@website")
-	public void afterSite(Scenario scenario) {
+	@BeforeStep(value = "@website", order = 2)
+	public void beforeSite2() {
+		scenario.log("GOOD BYE!!! ");
+	}
+
+	@AfterStep(value = "@website", order = 2)
+	public void afterSite() {
+
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		byte[] screenshot = ts.getScreenshotAs(OutputType.BYTES);
-		//scenario.embed(screenshot, "image/png", this.site);
-		// scenario.embed(screenshot, "image/png");
+
+		scenario.log("HELLO THERE!!! " + this.site);
+
 		scenario.attach(screenshot, "image/png", this.site);
-		//scenario.log("HELLO THERE!!!");
 		driver.quit();
+
+	}
+
+	@AfterStep(value = "@website", order = 1)
+	public void afterSite2() {
+		scenario.log("GOOD BYE!!! " + this.site);
 	}
 }

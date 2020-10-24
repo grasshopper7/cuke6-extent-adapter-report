@@ -3,4 +3,5 @@ Feature: Screenshots
 
   Scenario: Scenario screenshot
     Given Go to https://stackoverflow.com/
-    Given Go to https://github.com/
+    When Go to https://github.com/
+    Then Go to https://thehill.com/
