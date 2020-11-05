@@ -1,7 +1,8 @@
 @website
 Feature: Screenshots
 
-  Scenario: Scenario screenshot
-    Given Go to https://stackoverflow.com/
+  Scenario: Scenario screenshot GIT
     When Go to https://github.com/
-    Then Go to https://thehill.com/
+
+  Scenario: Scenario screenshot STACK
+    Given Go to https://stackoverflow.com/

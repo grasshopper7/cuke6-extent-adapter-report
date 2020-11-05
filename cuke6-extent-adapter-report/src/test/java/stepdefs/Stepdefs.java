@@ -14,6 +14,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -101,15 +102,16 @@ public class Stepdefs {
 	}
 
 	@Then("Raise exception")
-	public void raiseExcep() {
-
+	public void raiseExcep() throws InterruptedException {
+		Thread.sleep(2500);
 		Random r = new Random();
 		boolean flag = r.nextBoolean();
 		assertEquals(flag, true);
 	}
 
 	@Then("Do not raise exception")
-	public void doNotRaiseExcep() {
+	public void doNotRaiseExcep() throws InterruptedException {
+		Thread.sleep(1500);
 		assertEquals(true, true);
 	}
 
@@ -162,11 +164,15 @@ public class Stepdefs {
 
 		scenario.attach(screenshot, "image/png", this.site);
 		driver.quit();
-
 	}
 
 	@AfterStep(value = "@website", order = 1)
 	public void afterSite2() {
 		scenario.log("GOOD BYE!!! " + this.site);
+	}
+
+	@Given("Pending step definition")
+	public void pendingStep() throws PendingException {
+		throw new PendingException();
 	}
 }

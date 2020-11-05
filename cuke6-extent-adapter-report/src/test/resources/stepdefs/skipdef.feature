@@ -1,5 +1,13 @@
+@skip
 Feature: Scenarios With No Step Definitions
+  Feature description
 
-	@skipscenario
   Scenario: No Step defined
+    Skip Scenario Description
+
     Given No step definition methods
+    
+    Scenario: Pending step
+    Pending Scenario Description
+
+    Given Pending step definition
