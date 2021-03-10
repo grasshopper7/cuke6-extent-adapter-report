@@ -47,7 +47,6 @@ public class Stepdefs {
 
 	@Before(value = "@failure")
 	public void beforeFailure(Scenario scenario) { //
-		System.out.println("Before failure");
 		this.scenario = scenario;
 		scenario.log("FAILURE HI");
 		scenario.log("FAILURE HELLO");
@@ -56,7 +55,6 @@ public class Stepdefs {
 
 	@After(value = "@failure")
 	public void afterFailure() { //
-		System.out.println("After failure");
 		scenario.log("FAILURE HI");
 		scenario.log("FAILURE HELLO");
 		throw new RuntimeException();
@@ -64,12 +62,10 @@ public class Stepdefs {
 
 	@BeforeStep(value = "@failure")
 	public void beforeStepFailure() { //
-		System.out.println("Before Step failure");
 	}
 
 	@AfterStep(value = "@failure")
 	public void afterStepFailure() { //
-		System.out.println("After Step failure");
 	}
 
 	@Given("Hook failure step")
@@ -85,9 +81,8 @@ public class Stepdefs {
 		Thread.sleep(250);
 	}
 
-	@Given("{string} background")
-	public void background(String type) throws InterruptedException {
-		System.out.format("%s type background. \n", type);
+	@Given("Hello background")
+	public void background() throws InterruptedException {
 		this.scenario.log("background");
 		Thread.sleep(250);
 	}
@@ -117,14 +112,14 @@ public class Stepdefs {
 
 	@Given("Customer orders the dishes")
 	public void dataTable(List<List<String>> table) throws InterruptedException {
-		Thread.sleep(4000);
-		System.out.println(table);
+		Thread.sleep(2000);
+		//System.out.println(table);
 	}
 
 	@Given("the doc string is")
 	public void docStr(String docStr) throws InterruptedException {
-		Thread.sleep(4000);
-		System.out.println(docStr);
+		Thread.sleep(2000);
+		//System.out.println(docStr);
 	}
 
 	private WebDriver driver;
