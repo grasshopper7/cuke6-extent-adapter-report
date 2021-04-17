@@ -1,6 +1,8 @@
 package stepdefs;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
+
+//import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import java.util.Random;
@@ -9,6 +11,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.SkipException;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
@@ -113,13 +116,13 @@ public class Stepdefs {
 	@Given("Customer orders the dishes")
 	public void dataTable(List<List<String>> table) throws InterruptedException {
 		Thread.sleep(2000);
-		//System.out.println(table);
+		// System.out.println(table);
 	}
 
 	@Given("the doc string is")
 	public void docStr(String docStr) throws InterruptedException {
 		Thread.sleep(2000);
-		//System.out.println(docStr);
+		// System.out.println(docStr);
 	}
 
 	private WebDriver driver;
@@ -170,4 +173,10 @@ public class Stepdefs {
 	public void pendingStep() throws PendingException {
 		throw new PendingException();
 	}
+
+	@Given("Skipped step definition")
+	public void skippedStep() {
+		throw new SkipException("SKip it");
+	}
+
 }

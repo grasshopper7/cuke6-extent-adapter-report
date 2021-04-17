@@ -11,3 +11,8 @@ Feature: Scenarios With No Step Definitions
     Pending Scenario Description
 
     Given Pending step definition
+
+    Scenario: Skipped step
+    Skipped Scenario Description
+
+    Given Skipped step definition
