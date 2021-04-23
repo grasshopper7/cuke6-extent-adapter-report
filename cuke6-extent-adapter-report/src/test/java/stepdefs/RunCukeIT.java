@@ -10,7 +10,7 @@ import io.cucumber.junit.CucumberOptions;*/
 
 //@RunWith(Cucumber.class)
 @CucumberOptions(plugin = { "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-		"summary" }/* , tags = "@skip or @failure" */)
+		"summary" } /* , tags = "@both" */ )
 public class RunCukeIT extends AbstractTestNGCucumberTests {
 
 }
