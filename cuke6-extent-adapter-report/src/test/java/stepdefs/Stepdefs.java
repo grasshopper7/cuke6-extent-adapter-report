@@ -17,7 +17,6 @@ import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -29,6 +28,7 @@ import cucumber.api.java.*;
 import cucumber.api.java.en.*;*/
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import sun.security.util.PendingException;
 
 public class Stepdefs {
 
@@ -107,6 +107,11 @@ public class Stepdefs {
 		assertEquals(flag, true);
 	}
 
+	@Then("Raise exception Skip")
+	public void raiseExcepSkip() throws InterruptedException {
+		throw new SkipException("Sample skip");
+	}
+
 	@Then("Do not raise exception")
 	public void doNotRaiseExcep() throws InterruptedException {
 		Thread.sleep(1500);
@@ -136,7 +141,7 @@ public class Stepdefs {
 		Thread.sleep(500);
 	}
 
-	@BeforeStep(value = "@website", order = 1)
+	@BeforeStep(value = "@website or @large", order = 1)
 	public void beforeSite(Scenario scenario) {
 		this.scenario = scenario;
 
@@ -152,7 +157,7 @@ public class Stepdefs {
 		scenario.log("GOOD BYE!!! ");
 	}
 
-	@AfterStep(value = "@website", order = 2)
+	@AfterStep(value = "@website or @large", order = 2)
 	public void afterSite() {
 
 		TakesScreenshot ts = (TakesScreenshot) driver;
