@@ -11,6 +11,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+//import org.testng.SkipException;
 import org.testng.SkipException;
 
 import io.cucumber.java.After;
@@ -109,7 +110,7 @@ public class Stepdefs {
 
 	@Then("Raise exception Skip")
 	public void raiseExcepSkip() throws InterruptedException {
-		throw new SkipException("Sample skip");
+		// throw new SkipException("Sample skip");
 	}
 
 	@Then("Do not raise exception")
@@ -136,18 +137,19 @@ public class Stepdefs {
 	@And("Go to {word}")
 	public void visitweb(String site) throws Exception {
 		driver.get(site);
+
 		this.site = site;
 		scenario.log("scenario website name - " + site);
-		Thread.sleep(500);
 	}
 
 	@BeforeStep(value = "@website or @large", order = 1)
-	public void beforeSite(Scenario scenario) {
+	public void beforeSite(Scenario scenario) throws Exception{
 		this.scenario = scenario;
 
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
+		Thread.sleep(500);
 
 		scenario.log("HELLO THERE!!! ");
 	}

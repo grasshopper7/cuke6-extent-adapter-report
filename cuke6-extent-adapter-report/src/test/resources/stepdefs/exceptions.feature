@@ -12,6 +12,7 @@ Feature: Exception
     Given Raise exception
 
   Scenario Outline: Check exception <row_num>
+    #Given Raise exception Skip
     Given Raise exception
 
     Examples: 

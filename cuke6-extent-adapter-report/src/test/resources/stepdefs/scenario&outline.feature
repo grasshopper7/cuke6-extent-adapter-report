@@ -25,3 +25,9 @@ Feature: Scenario And Scenario Outline
     Given Write a 'given' step with precondition in 'Scenario 777'
     When Complete action in 'when' step in 'Scenario 777'
     Then Validate the outcome in 'then' step in 'Scenario 777'
+    
+  @misc
+  Scenario: Scenario Other Symbols
+    * Write a 'given' step with precondition in 'Scenario 777'
+    And Complete action in 'when' step in 'Scenario 777'
+    But Validate the outcome in 'then' step in 'Scenario 777'
