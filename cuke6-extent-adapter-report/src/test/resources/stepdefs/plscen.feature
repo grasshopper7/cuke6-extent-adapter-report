@@ -1,6 +1,6 @@
 # language: pl
 @dialect
-Właściwość: Polish Scenario And Scenario Outline
+Właściwość: Polish Założenia Scenariusz And Szablon scenariusza 
 
   Szablon scenariusza: Scenario Outline Row <row_num>
     Zakładając, że Write a 'given' step with precondition in '<scenario_num><row_num>'
