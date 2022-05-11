@@ -95,7 +95,7 @@ public class Stepdefs {
 	@When("Complete action in {string} step in {string}")
 	@Then("Validate the outcome in {string} step in {string}")
 	public void step(String step, String scenario) throws InterruptedException {
-		System.out.format("%s step from %s.\n", step.toUpperCase(), scenario.toUpperCase());
+		//System.out.format("%s step from %s.\n", step.toUpperCase(), scenario.toUpperCase());
 		this.scenario.log("log HATE THIS");
 		Thread.sleep(1000);
 	}
