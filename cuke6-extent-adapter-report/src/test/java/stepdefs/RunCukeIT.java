@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 //import io.cucumber.testng.AbstractTestNGCucumberTests;
 
 //@RunWith(Cucumber.class)
-@CucumberOptions(plugin = { "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:", "summary",
+@CucumberOptions(features = "src/test/resources/stepdefs/",plugin = { "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:", "summary",
 		/* "rerun:target/rerun1.txt" */ }/* , tags = "@dialect" */)
 public class RunCukeIT extends AbstractTestNGCucumberTests {
 
