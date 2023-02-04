@@ -7,7 +7,8 @@ import io.cucumber.testng.CucumberOptions;
 //@RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/stepdefs/", plugin = {
 		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:", "summary",
-		/* "rerun:target/rerun1.txt" */ }/* , tags = "@both" */)
+		/* "html:target/cucumber-reports.html", */
+		/* "rerun:target/rerun1.txt" */ } /* , tags = "@tabledoc or @skip" */ )
 public class RunCukeIT extends AbstractTestNGCucumberTests {
 
 	/*
