@@ -1,15 +1,16 @@
 package stepdefs;
 
-import io.cucumber.testng.AbstractTestNGCucumberTests;
-import io.cucumber.testng.CucumberOptions;
-//import io.cucumber.testng.AbstractTestNGCucumberTests;
+import org.junit.runner.RunWith;
 
-//@RunWith(Cucumber.class)
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+
+@RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/stepdefs/", plugin = {
 		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:", "summary",
-		/* "html:target/cucumber-reports.html", */
-		/* "rerun:target/rerun1.txt" */ } /* , tags = "@tabledoc or @skip" */ )
-public class RunCukeIT extends AbstractTestNGCucumberTests {
+/* "html:target/cucumber-reports.html", */
+/* "rerun:target/rerun1.txt" */ } /* , tags = "@tabledoc or @skip" */ )
+public class RunCukeIT /* extends AbstractTestNGCucumberTests */ {
 
 	/*
 	 * @Override

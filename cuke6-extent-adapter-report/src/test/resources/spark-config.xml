@@ -21,6 +21,8 @@
 		
 		<!-- view report without internet -->
 		<offlineMode>false</offlineMode>
+		
+		<!-- <thumbnailForBase64>true</thumbnailForBase64> -->
 
 		<!-- custom javascript -->
 		<js></js>
